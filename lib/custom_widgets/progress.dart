@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:test_f_one/helpers/constants.dart';
+import 'package:flutter/material.dart';
 
 class ProgressWidget extends StatelessWidget {
   const ProgressWidget({

@@ -12,24 +12,5 @@ class Medicines {
   factory Medicines.fromJson(Map<String, dynamic> json) =>
       _$MedicinesFromJson(json);
   Map<String, dynamic> toJson() => _$MedicinesToJson(this);
-
-  @override
-  // TODO: implement iterator
   Iterator get iterator => throw UnimplementedError();
 }
-
-/*{
-"date": "2019-01-05",
-"title": "Break First",
-"icon": 1,
-"medicines": [
-{
-"name": "Simvastatine",
-"dose": "2 stuck, 40 mg"
-},
-{
-"name": "Simvastatine",
-"dose": "2 stuck, 40 mg"
-}
-]
-}*/

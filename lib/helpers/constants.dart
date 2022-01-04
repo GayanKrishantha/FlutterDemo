@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'extension.dart';
 import 'dart:core';
-import 'dart:ui';
 
 class IconTypes {
   static const alarm = 1;
@@ -116,4 +115,9 @@ class AppTheme {
       fontSize: 22,
       fontFamily: fontFamily,
       color: AppColors().date);
+}
+
+class AppDateFormat {
+  final String apiDateFormatter = 'yyyy-MM-dd hh:mm:ss';
+  final String appDateFormatter = 'EEEE DD MMM';
 }

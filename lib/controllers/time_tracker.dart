@@ -2,12 +2,10 @@ import 'package:test_f_one/providers/time_tracker_provider.dart';
 import 'package:test_f_one/controllers/timeTrackerWidget.dart';
 import 'package:test_f_one/custom_widgets/progress.dart';
 import 'package:test_f_one/data/model/moment_model.dart';
-import 'package:test_f_one/helpers/extension.dart';
 import 'package:test_f_one/helpers/constants.dart';
 import 'package:grouped_list/grouped_list.dart';
+import 'package:test_f_one/helpers/utils.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'dart:convert';
 
 class TimeTrackerScreen extends StatefulWidget {
   const TimeTrackerScreen({Key? key}) : super(key: key);
@@ -24,30 +22,7 @@ class _TimeTrackerScreenState extends State<TimeTrackerScreen> {
   @override
   initState() {
     super.initState();
-    _value = getValue();
-  }
-
-  late Future<Map<String, List<MomentArguments>>> _value;
-  Future<Map<String, List<MomentArguments>>> getValue() async {
-    await Future.delayed(const Duration(seconds: 3));
-    return readJson();
-  }
-
-  Future<Map<String, List<MomentArguments>>> readJson() async {
-    List<Momenta> list = [];
-    try {
-      final String response =
-          await rootBundle.loadString('assets/locale/moments.json');
-      final Map<String, dynamic> extractedData = json.decode(response);
-      final List<dynamic> data = extractedData['moments'];
-      list = data.map((e) => Momenta.fromJson(e)).toList();
-      array =
-          provider.processResponse(list).groupBy((person) => person.momenta.date);
-      return array;
-    } catch (error) {
-      debugPrint('$error');
-    }
-    return array;
+    provider.value = provider.getValue();
   }
 
   @override
@@ -59,7 +34,7 @@ class _TimeTrackerScreenState extends State<TimeTrackerScreen> {
           backgroundColor: AppColors().primary,
           titleTextStyle: AppTheme().appTitle),
       body: FutureBuilder<Map<String, List<MomentArguments>>>(
-        future: _value,
+        future: provider.value,
         builder: (
           BuildContext context,
           AsyncSnapshot<Map<String, List<MomentArguments>>> snapshot,
@@ -82,7 +57,7 @@ class _TimeTrackerScreenState extends State<TimeTrackerScreen> {
                 groupSeparatorBuilder: (String value) => Padding(
                   padding: const EdgeInsets.fromLTRB(Dimensions.pX14,
                       Dimensions.pX24, Dimensions.pX14, Dimensions.pX14),
-                  child: Text(provider.dateFormatter(value),
+                  child: Text(Utils.dateFormatterWithString(value),
                       style: AppTheme().titleDate),
                 ),
                 itemBuilder: (context, element) {
